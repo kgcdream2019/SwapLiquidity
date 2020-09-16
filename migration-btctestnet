@@ -1,0 +1,73 @@
+root@x-chain:~/work/uniswap/sushiswap# truffle migrate --network bsctestnet --reset
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'bsctestnet'
+> Network id:      97
+> Block gas limit: 30000000 (0x1c9c380)
+
+
+1_initial_migration.js
+======================
+
+   Replacing 'Migrations'
+   ----------------------
+   > transaction hash:    0x3a9e72f721d7045864c6b6fbb71f94729eea6f1016a1da65c76725d568716159
+   > Blocks: 2            Seconds: 5
+   > contract address:    0xEcfBe4c71054cd45bbB7BA40C1c19A62ED8076c8
+   > block number:        1941256
+   > block timestamp:     1600188949
+   > account:             0x50c30475De04BB4F5BCD2Eb6622CABDa8dBF6a5a
+   > balance:             9.46070128
+   > gas used:            159195 (0x26ddb)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0031839 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 1941259)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0031839 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'SushiToken'
+   ----------------------
+   > transaction hash:    0xbc99b8b7c7c7e72150fa82c0a92c0592c3113690fd7a7346c1027c3bedecc74a
+   > Blocks: 2            Seconds: 5
+   > contract address:    0xEdd7A93e0a1274e48986C7AfD3A552E58b6085ff
+   > block number:        1941266
+   > block timestamp:     1600188979
+   > account:             0x50c30475De04BB4F5BCD2Eb6622CABDa8dBF6a5a
+   > balance:             9.40591108
+   > gas used:            2697172 (0x2927d4)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05394344 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 1941269)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05394344 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.05712734 ETH
