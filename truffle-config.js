@@ -64,19 +64,19 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "d98f392aa4ce1d91bdbf2bbfd6ae40e53c575cb68a67b7ebe19c8735e8ae4d46",
-          "134e98452a560d4356bece4743110c7772b1c691c81006e6eb2526bad923cd19",
-          "3cd98c4150cf645f750aec42e4caef3af75e9722eb34a93111a18eb41d9daed0",
-          "febc2b9330711d69829a6be39dc4df39934b601cb39ec4d69c7306e6afd17a3a",
-
+          "d98f392aa4ce1d91bdbf2bbfd6ae40e53c575cb68a67b7ebe19c8735e8ae4d46", //Pet-Defi-deployer
+          "134e98452a560d4356bece4743110c7772b1c691c81006e6eb2526bad923cd19", //Pet-Defi-Dev
+          "3cd98c4150cf645f750aec42e4caef3af75e9722eb34a93111a18eb41d9daed0", //Pet-Defi-3
+          "febc2b9330711d69829a6be39dc4df39934b601cb39ec4d69c7306e6afd17a3a", //Pet-Defi-4
         ];
         return new HDWalletProvider(privateKeys, "https://data-seed-prebsc-1-s1.binance.org:8545");
       },
       network_id: 97, // eslint-disable-line camelcase
-      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      gas: 29000000, // Ropsten has a lower block limit than mainnet
+      gasPrice: 122000000000, // 122 gwei
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
-      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+      timeoutBlocks: 50, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
     },
     live: {
       provider: function () {
