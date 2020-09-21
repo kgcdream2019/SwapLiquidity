@@ -1,4 +1,4 @@
-root@x-chain:~/work/uniswap/sushiswap# truffle migrate --network bsctestnet --reset
+root@x-chain:~/work/uniswap/SwapLiquidity# truffle migrate --network bsctestnet --reset
 
 Starting migrations...
 ======================
@@ -10,7 +10,7 @@ Starting migrations...
 2_deploy_contracts.js
 =====================
 
-   Deploying 'SushiToken'
+   Deploying 'SwapLiquidityToken'
    ----------------------
    > transaction hash:    0xbc99b8b7c7c7e72150fa82c0a92c0592c3113690fd7a7346c1027c3bedecc74a
    > contract address:    0xEdd7A93e0a1274e48986C7AfD3A552E58b6085ff
@@ -27,7 +27,7 @@ Starting migrations...
 
 step 2 =============================================================================================================================================================
 
-   Replacing 'SushiToken'
+   Replacing 'SwapLiquidityToken'
    ----------------------
    > transaction hash:    0xb07c6fed24c10460aa1917abbb07b08ca17b95aa64138a8510b383fe4468777b
    > contract address:    0xcad96514d060a9aF284F21D17a0684Da8954bdC0
@@ -37,7 +37,7 @@ step 2 =========================================================================
    > value sent:          0 ETH
    > total cost:          0.05394344 ETH
 
-   Deploying 'SushiBar'
+   Deploying 'SwapLiquidityBar'
    --------------------
    > transaction hash:    0xa6be841b31d2470be1f813d957ad13cd0bdb8c7e0d68c95cd47dbcabd555aef5
    > contract address:    0x0CBe824Eb1D018eA73C616d1f209046DbCEE56a5
@@ -50,7 +50,7 @@ step 2 =========================================================================
 > Final cost:          0.09010688 ETH
 ====================================================================================================================================================================
 
-   Replacing 'SushiToken'
+   Replacing 'SwapLiquidityToken'
    ----------------------
    > transaction hash:    0x6bcebebcb6071ab18c0cff291561c910bdd04340b20d06f18749fb16f4187cb5
    > contract address:    0xE114f210f5d92c58448772769f0adCc7E53Dfef5
@@ -61,7 +61,7 @@ step 2 =========================================================================
    > value sent:          0 ETH
    > total cost:          0.05394344 ETH
 
-   Replacing 'SushiBar'
+   Replacing 'SwapLiquidityBar'
    --------------------
    > transaction hash:    0x55cfc21985af5d1cd006196c6de0c96773db89880d1c80301e7790a86c6cd0c7
    > Blocks: 2            Seconds: 5

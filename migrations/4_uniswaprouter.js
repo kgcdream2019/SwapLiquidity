@@ -1,5 +1,5 @@
-const SushiToken = artifacts.require('SushiToken');
-const SushiBar = artifacts.require('SushiBar');
+const SwapLiquidityToken = artifacts.require('SwapLiquidityToken');
+const SwapLiquidityBar = artifacts.require('SwapLiquidityBar');
 const MasterChef = artifacts.require('MasterChef');
 const WETH = artifacts.require('WETH');
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');

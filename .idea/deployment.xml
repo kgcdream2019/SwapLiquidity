@@ -5,7 +5,7 @@
       <paths name="xchain-full-node">
         <serverdata>
           <mappings>
-            <mapping deploy="/root/work/uniswap/sushiswap" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/root/work/uniswap/swapliquidity" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
