@@ -1,0 +1,115 @@
+ Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x355add505883ecfe432169b3676e461251860a5fd974143f3232d141316a4f10
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x1B9191F2FDcd943738a9550Eb6231C8fD6a874dF
+   > block number:        2096960
+   > block timestamp:     1600659552
+   > account:             0xafCe130B2cd93D191A6C16e784a4F200107399ee
+   > balance:             6.4968161
+   > gas used:            159195 (0x26ddb)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0031839 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 2096961)
+   > confirmation number: 3 (block: 2096963)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0031839 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'WETH'
+   ----------------
+   > transaction hash:    0xace505bee273573896abe99094990591132a1419fc29f42989ea58d456c8204b
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x3207A1C4f3c6A971A2b73ccb5450625D3ED6FAC1
+   > block number:        2096967
+   > block timestamp:     1600659573
+   > account:             0xafCe130B2cd93D191A6C16e784a4F200107399ee
+   > balance:             6.47948926
+   > gas used:            824004 (0xc92c4)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01648008 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 2096968)
+   > confirmation number: 2 (block: 2096969)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.01648008 ETH
+
+
+3_uniswap_factory.js
+====================
+
+   Deploying 'UniswapV2Factory'
+   ----------------------------
+   > transaction hash:    0x2fb52e559dd5d106c2f7d0358215e25408caf78b10f2fe11040f25e5bd306017
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xC08C219D666b61f114cAB3763824806aC7e63C0C
+   > block number:        2097132
+   > block timestamp:     1600660068
+   > account:             0xafCe130B2cd93D191A6C16e784a4F200107399ee
+   > balance:             6.3893782
+   > gas used:            4222006 (0x406c36)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.08444012 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 2097133)
+   > confirmation number: 3 (block: 2097135)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.08444012 ETH
+
+4_uniswaprouter.js
+==================
+
+   Deploying 'UniswapV2Router02'
+   -----------------------------
+   > transaction hash:    0x577e0f60fdda6d482f37d288aadb66b51540927e53d12153d026b0c8b2d4c21f
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xAdE8B0755FB65531f412cDbf6B680e72494476D8
+   > block number:        2098521
+   > block timestamp:     1600664235
+   > account:             0xafCe130B2cd93D191A6C16e784a4F200107399ee
+   > balance:             6.30990058
+   > gas used:            3946543 (0x3c382f)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.07893086 ETH
+   > factory address      0xC08C219D666b61f114cAB3763824806aC7e63C0C
+   > WETH address         0x3207A1C4f3c6A971A2b73ccb5450625D3ED6FAC1
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 2098522)
+   > confirmation number: 3 (block: 2098524)
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.07893086 ETH
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.08762402 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.01966398 ETH

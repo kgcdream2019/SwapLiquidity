@@ -8,5 +8,5 @@ const UniswapV2Router02 = artifacts.require('UniswapV2Router02');
 // Deployment uniswap contracts
 
 module.exports = async function(deployer, network, accounts) {
-    // await deployer.deploy(UniswapV2Factory, "0xafCe130B2cd93D191A6C16e784a4F200107399ee");  //feeSeter
+    await deployer.deploy(UniswapV2Router02, "0xC08C219D666b61f114cAB3763824806aC7e63C0C", "0x3207A1C4f3c6A971A2b73ccb5450625D3ED6FAC1");  // factory address, weth address
 };
