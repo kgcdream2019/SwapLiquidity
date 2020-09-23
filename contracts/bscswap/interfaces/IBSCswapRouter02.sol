@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 pragma solidity >=0.6.2;
 
 import './IBSCswapRouter01.sol';
 
-interface IBSCswapRouter is IBSCswapRouter01 {
+interface IBSCswapRouter02 is IBSCswapRouter01 {
     function removeLiquidityBNBSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
