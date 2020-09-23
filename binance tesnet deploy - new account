@@ -26,7 +26,7 @@
 2_deploy_contracts.js
 =====================
 
-   Deploying 'WETH'
+   Deploying 'WBNB'
    ----------------
    > transaction hash:    0xace505bee273573896abe99094990591132a1419fc29f42989ea58d456c8204b
    > Blocks: 1            Seconds: 4
@@ -54,7 +54,7 @@
 3_uniswap_factory.js
 ====================
 
-   Deploying 'UniswapV2Factory'
+   Deploying 'BSCswapFactory'
    ----------------------------
    > transaction hash:    0x2fb52e559dd5d106c2f7d0358215e25408caf78b10f2fe11040f25e5bd306017
    > Blocks: 2            Seconds: 4
@@ -81,7 +81,7 @@
 4_uniswaprouter.js
 ==================
 
-   Deploying 'UniswapV2Router02'
+   Deploying 'BSCswapRouter02'
    -----------------------------
    > transaction hash:    0x577e0f60fdda6d482f37d288aadb66b51540927e53d12153d026b0c8b2d4c21f
    > Blocks: 1            Seconds: 4
@@ -95,7 +95,7 @@
    > value sent:          0 ETH
    > total cost:          0.07893086 ETH
    > factory address      0xC08C219D666b61f114cAB3763824806aC7e63C0C
-   > WETH address         0x3207A1C4f3c6A971A2b73ccb5450625D3ED6FAC1
+   > WBNB address         0x3207A1C4f3c6A971A2b73ccb5450625D3ED6FAC1
    Pausing for 2 confirmations...
    ------------------------------
    > confirmation number: 1 (block: 2098522)

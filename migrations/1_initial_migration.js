@@ -1,6 +1,6 @@
 const Migrations = artifacts.require("Migrations");
 
-module.exports = async function(deployer) {
+module.exports = function(deployer) {
 
-  // await deployer.deploy(Migrations);
+  deployer.deploy(Migrations);
 };

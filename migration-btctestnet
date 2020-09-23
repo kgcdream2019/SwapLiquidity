@@ -96,7 +96,7 @@ step 2 =========================================================================
 2_deploy_contracts.js
 =====================
 
-   Deploying 'WETH'
+   Deploying 'WBNB'
    ----------------
    > transaction hash:    0xdaaa37e8074917f21c1d060da1caef801078fcf56c6f97b3bdfa9426f8fbc8b8
    > Blocks: 1            Seconds: 5
