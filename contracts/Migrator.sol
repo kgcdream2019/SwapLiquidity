@@ -1,7 +1,7 @@
 pragma solidity 0.6.12;
 
-import "./uniswapv2/interfaces/IBSCswapPair.sol";
-import "./uniswapv2/interfaces/IBSCswapFactory.sol";
+import "./bscswap/interfaces/IBSCswapPair.sol";
+import "./bscswap/interfaces/IBSCswapFactory.sol";
 
 
 contract Migrator {

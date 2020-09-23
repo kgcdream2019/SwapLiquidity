@@ -3,9 +3,9 @@ pragma solidity 0.6.12;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "./uniswapv2/interfaces/IBSCswapBEP20.sol";
-import "./uniswapv2/interfaces/IBSCswapPair.sol";
-import "./uniswapv2/interfaces/IBSCswapFactory.sol";
+import "./bscswap/interfaces/IBSCswapBEP20.sol";
+import "./bscswap/interfaces/IBSCswapPair.sol";
+import "./bscswap/interfaces/IBSCswapFactory.sol";
 
 
 contract SwapLiquidityMaker {
