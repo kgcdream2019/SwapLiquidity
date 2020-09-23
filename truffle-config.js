@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const PrivateKeyProvider = require("truffle-privatekey-provider");
-var infuraProjectId = '47d0397f2c8644e8ae13bf09a066155e';
+var infuraProjectId = '133c25301bc1b1ac623cfee74d60fb'; //second part
 module.exports = {
   // Uncommenting the defaults below
   // provides for an easier quick-start with Ganache.
@@ -35,7 +35,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "1F3EDEA48BCE8BB6357ABABC55610A36225873434F43E570655E62C0E65366F3",
+          "",
 
         ];
         return new HDWalletProvider(privateKeys, "https://ropsten.infura.io/v3/" + infuraProjectId)
@@ -51,7 +51,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383133c25301bc1b1ac623cfee74d60fb",
+          "",
         ];
         return new HDWalletProvider(privateKeys, "https://kovan.infura.io/v3/" + infuraProjectId);
       },
@@ -61,16 +61,13 @@ module.exports = {
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
-    binancetestnet: {  // binance smart chain testnet
+    bsctestnet: {  // binance smart chain testnet
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383133c25301bc1b1ac623cfee74d60fb", //Pet-Defi-deployer
-          // "134e98452a560d4356bece4743110c7772b1c691c81006e6eb2526bad923cd19", //Pet-Defi-Dev
-          // "3cd98c4150cf645f750aec42e4caef3af75e9722eb34a93111a18eb41d9daed0", //Pet-Defi-3
-          // "febc2b9330711d69829a6be39dc4df39934b601cb39ec4d69c7306e6afd17a3a", //Pet-Defi-4
+          "" //
         ];
-        var privateKey = "8865fd5725e751d432ff9076d937c0f383133c25301bc1b1ac623cfee74d60fb";
+        
         return new HDWalletProvider(privateKeys, "https://data-seed-prebsc-1-s2.binance.org:8545");
         // return new PrivateKeyProvider(privateKey, "https://data-seed-prebsc-1-s2.binance.org:8545");
       },
@@ -81,11 +78,27 @@ module.exports = {
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
+    bscmainnet: {  // binance smart chain testnet
+      provider: function() {
+        // Or, pass an array of private keys, and optionally use a certain subset of addresses
+        var privateKeys = [
+          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+        ];
+        
+        return new HDWalletProvider(privateKeys, "https://bsc-dataseed.binance.org");
+      },
+      network_id: 56, // eslint-disable-line camelcase
+      gas: 29000000, // Ropsten has a lower block limit than mainnet
+      // gasPrice: 25000000000, // 122 gwei
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
     live: {
       provider: function () {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "1F3EDEA48BCE8BB6357ABABC55610A36225873434F43E570655E62C0E65366F3",
+          "",
         ];
         return new HDWalletProvider(privateKeys, "https://mainnet.infura.io/v3/" + infuraProjectId);
       },
