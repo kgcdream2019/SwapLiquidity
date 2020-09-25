@@ -128,16 +128,14 @@ module.exports = {
         outputSelection: {
           "*": {
             "*": [
-              "evm.bytecode.object",
-              "evm.deployedBytecode.object",
-              "abi",
+              "evm.bytecode",
               "evm.bytecode.sourceMap",
-              "evm.deployedBytecode.sourceMap",
               "metadata"
             ],
             "": ["ast"]
           }
         },
+        evmVersion: "byzantium",
         optimizer: {
           enabled: true, // Default: false
           runs: 200     // Default: 200
