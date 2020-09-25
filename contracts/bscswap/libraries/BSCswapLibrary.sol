@@ -23,7 +23,8 @@ library BSCswapLibrary {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'acc1c81cc3e9fb496da555f6bd67c3a095e579b26c1b580070cc6afa8f0a94fa' // init code hash
+                // hex'acc1c81cc3e9fb496da555f6bd67c3a095e579b26c1b580070cc6afa8f0a94fa' // init code hash
+                hex'b1e98e21a5335633815a8cfb3b580071c2e4561c50afd57a8746def9ed890b18' // init code hash
             ))));
     }
 
