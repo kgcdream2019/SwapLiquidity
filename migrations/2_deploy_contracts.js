@@ -12,9 +12,9 @@ const BSCswapPair = artifacts.require('BSCswapPair');
 const TimeLock = artifacts.require('Timelock');
 module.exports = async function(deployer, network, accounts) {
     console.log(network, accounts);
-    await deployer.deploy(SwapLiquidityToken);
-    const SwapLiquidityTokenContract = await SwapLiquidityToken.deployed();
-    await deployer.deploy(SwapLiquidityBar,SwapLiquidityTokenContract.address);
+    // await deployer.deploy(SwapLiquidityToken);
+    // const SwapLiquidityTokenContract = await SwapLiquidityToken.deployed();
+    // await deployer.deploy(SwapLiquidityBar,SwapLiquidityTokenContract.address);
     // await deployer.deploy(MasterChef,SwapLiquidityTokenContract.address, accounts[0], '1000', '0', '1000'); // dev
     // const MasterChefContract = await MasterChef.deployed();
     // SwapLiquidityTokenContract.transferOwnership(MasterChefContract.address);
