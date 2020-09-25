@@ -125,23 +125,12 @@ module.exports = {
     solc: {
       version: "0.6.12",
       settings: {
-        outputSelection: {
-          "*": {
-            "*": [
-              "evm.bytecode",
-              "evm.bytecode.sourceMap",
-              "metadata"
-            ],
-            "": ["ast"]
-          }
-        },
-        // evmVersion: "byzantium",
         optimizer: {
           enabled: true, // Default: false
-          runs: 200     // Default: 200
+          runs: 1000     // Default: 200
         }
-      },
-
+        //,        evmVersion: "homestead"  // Default: "byzantium"
+      }
     }
   }
 };
