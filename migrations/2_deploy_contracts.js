@@ -18,12 +18,12 @@ module.exports = async function(deployer, network, accounts) {
     // await deployer.deploy(MasterChef,SwapLiquidityTokenContract.address, accounts[0], '1000', '0', '1000'); // dev
     // const MasterChefContract = await MasterChef.deployed();
     // SwapLiquidityTokenContract.transferOwnership(MasterChefContract.address);
-    await deployer.deploy(BSCswapFactory,SwapLiquidityTokenContract.address);
+    // await deployer.deploy(BSCswapFactory,SwapLiquidityTokenContract.address);
     // await deployer.deploy(TimeLock, accounts[0],"3 days");
     await deployer.deploy(BSCswapFactory, accounts[0]);  //feeSeter
     const BSCswapFactoryContract = await BSCswapFactory.deployed();
-    const WBNB_ASSRESS = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"; //BSC_MAINNET
-    // const WBNB_ASSRESS = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"; //BSC_TESTNET
+    const WBNB_ASSRESS = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'; //BSC_MAINNET  
+    console.log('factory address = ', BSCswapFactoryContract.address, 'WBNB address = ', WBNB_ASSRESS);
     await deployer.deploy(BSCswapRouter, BSCswapFactoryContract.address, WBNB_ASSRESS);  // factory address, weth address
 };
 

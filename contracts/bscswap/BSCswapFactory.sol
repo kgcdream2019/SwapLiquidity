@@ -8,7 +8,6 @@ import './BSCswapPair.sol';
 contract BSCswapFactory is IBSCswapFactory {
     address public override feeTo;
     address public override feeToSetter;
-    address public override migrator;
 
     mapping(address => mapping(address => address)) public override getPair;
     address[] public override allPairs;
@@ -21,10 +20,6 @@ contract BSCswapFactory is IBSCswapFactory {
 
     function allPairsLength() external override view returns (uint) {
         return allPairs.length;
-    }
-
-    function pairCodeHash() external pure returns (bytes32) {
-        return keccak256(type(BSCswapPair).creationCode);
     }
 
     function createPair(address tokenA, address tokenB) external override returns (address pair) {
@@ -49,14 +44,8 @@ contract BSCswapFactory is IBSCswapFactory {
         feeTo = _feeTo;
     }
 
-    function setMigrator(address _migrator) external override {
-        require(msg.sender == feeToSetter, 'BSCswap: FORBIDDEN');
-        migrator = _migrator;
-    }
-
     function setFeeToSetter(address _feeToSetter) external override {
         require(msg.sender == feeToSetter, 'BSCswap: FORBIDDEN');
         feeToSetter = _feeToSetter;
     }
-
 }
