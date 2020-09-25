@@ -135,7 +135,7 @@ module.exports = {
             "": ["ast"]
           }
         },
-        evmVersion: "byzantium",
+        // evmVersion: "byzantium",
         optimizer: {
           enabled: true, // Default: false
           runs: 200     // Default: 200
