@@ -423,13 +423,13 @@ contract BSCswapPair is BSCswapBEP20 {
     }
 }
 
-// File: contracts/bscswap/BSCswapFactory.sol
+// File: contracts/bscswap/SwapLiquidityFactory.sol
 
 pragma solidity =0.6.12;
 
 
 
-contract BSCswapFactory is IBSCswapFactory {
+contract SwapLiquidityFactory is IBSCswapFactory {
     address public override feeTo;
     address public override feeToSetter;
     address public override migrator;
