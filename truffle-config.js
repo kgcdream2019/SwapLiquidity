@@ -94,6 +94,22 @@ module.exports = {
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
+    htmainnet: {  // huobi eco chain
+      provider: function() {
+        // Or, pass an array of private keys, and optionally use a certain subset of addresses
+        var privateKeys = [
+          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+        ];
+        
+        return new HDWalletProvider(privateKeys, "https://http-mainnet.hecochain.com/");
+      },
+      network_id: 128, // eslint-disable-line camelcase
+      gas: 29000000, // Ropsten has a lower block limit than mainnet
+      // gasPrice: 25000000000, // 122 gwei
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
     live: {
       provider: function () {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
