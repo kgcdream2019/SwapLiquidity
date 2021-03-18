@@ -3,21 +3,21 @@ pragma solidity 0.6.12;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "./bscswap/interfaces/IBSCswapBEP20.sol";
-import "./bscswap/interfaces/IBSCswapPair.sol";
-import "./bscswap/interfaces/IBSCswapFactory.sol";
+import "./bscswap/interfaces/IJulSwapHRC20.sol";
+import "./bscswap/interfaces/IJulSwapHPair.sol";
+import "./bscswap/interfaces/IJulSwapHFactory.sol";
 
 
 contract SwapLiquidityMaker {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IBSCswapFactory public factory;
+    IJulSwapHFactory public factory;
     address public bar;
     address public swapliquidity;
     address public weth;
 
-    constructor(IBSCswapFactory _factory, address _bar, address _swapliquidity, address _weth) public {
+    constructor(IJulSwapHFactory _factory, address _bar, address _swapliquidity, address _weth) public {
         factory = _factory;
         swapliquidity = _swapliquidity;
         bar = _bar;
@@ -27,7 +27,7 @@ contract SwapLiquidityMaker {
     function convert(address token0, address token1) public {
         // At least we try to make front-running harder to do.
         require(msg.sender == tx.origin, "do not convert from contract");
-        IBSCswapPair pair = IBSCswapPair(factory.getPair(token0, token1));
+        IJulSwapHPair pair = IJulSwapHPair(factory.getPair(token0, token1));
         pair.transfer(address(pair), pair.balanceOf(address(this)));
         pair.burn(address(this));
         uint256 wethAmount = _toWBNB(token0) + _toWBNB(token1);
@@ -45,7 +45,7 @@ contract SwapLiquidityMaker {
             _safeTransfer(token, factory.getPair(weth, swapliquidity), amount);
             return amount;
         }
-        IBSCswapPair pair = IBSCswapPair(factory.getPair(token, weth));
+        IJulSwapHPair pair = IJulSwapHPair(factory.getPair(token, weth));
         if (address(pair) == address(0)) {
             return 0;
         }
@@ -64,7 +64,7 @@ contract SwapLiquidityMaker {
     }
 
     function _toSLT(uint256 amountIn) internal {
-        IBSCswapPair pair = IBSCswapPair(factory.getPair(weth, swapliquidity));
+        IJulSwapHPair pair = IJulSwapHPair(factory.getPair(weth, swapliquidity));
         (uint reserve0, uint reserve1,) = pair.getReserves();
         address token0 = pair.token0();
         (uint reserveIn, uint reserveOut) = token0 == weth ? (reserve0, reserve1) : (reserve1, reserve0);

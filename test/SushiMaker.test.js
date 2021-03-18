@@ -1,22 +1,22 @@
 const SwapLiquidityToken = artifacts.require('SwapLiquidityToken');
 const SwapLiquidityMaker = artifacts.require('SwapLiquidityMaker');
 const MockERC20 = artifacts.require('MockERC20');
-const BSCswapPair = artifacts.require('BSCswapPair');
-const BSCswapFactory = artifacts.require('BSCswapFactory');
+const JulSwapHPair = artifacts.require('JulSwapHPair');
+const JulSwapHFactory = artifacts.require('JulSwapHFactory');
 
 contract('SwapLiquidityMaker', ([alice, bar, minter]) => {
     beforeEach(async () => {
-        this.factory = await BSCswapFactory.new(alice, { from: alice });
+        this.factory = await JulSwapHFactory.new(alice, { from: alice });
         this.swapliquidity = await SwapLiquidityToken.new({ from: alice });
         await this.swapliquidity.mint(minter, '100000000', { from: alice });
         this.weth = await MockERC20.new('WBNB', 'WBNB', '100000000', { from: minter });
         this.token1 = await MockERC20.new('TOKEN1', 'TOKEN', '100000000', { from: minter });
         this.token2 = await MockERC20.new('TOKEN2', 'TOKEN2', '100000000', { from: minter });
         this.maker = await SwapLiquidityMaker.new(this.factory.address, bar, this.swapliquidity.address, this.weth.address);
-        this.swapliquidityWBNB = await BSCswapPair.at((await this.factory.createPair(this.weth.address, this.swapliquidity.address)).logs[0].args.pair);
-        this.wethToken1 = await BSCswapPair.at((await this.factory.createPair(this.weth.address, this.token1.address)).logs[0].args.pair);
-        this.wethToken2 = await BSCswapPair.at((await this.factory.createPair(this.weth.address, this.token2.address)).logs[0].args.pair);
-        this.token1Token2 = await BSCswapPair.at((await this.factory.createPair(this.token1.address, this.token2.address)).logs[0].args.pair);
+        this.swapliquidityWBNB = await JulSwapHPair.at((await this.factory.createPair(this.weth.address, this.swapliquidity.address)).logs[0].args.pair);
+        this.wethToken1 = await JulSwapHPair.at((await this.factory.createPair(this.weth.address, this.token1.address)).logs[0].args.pair);
+        this.wethToken2 = await JulSwapHPair.at((await this.factory.createPair(this.weth.address, this.token2.address)).logs[0].args.pair);
+        this.token1Token2 = await JulSwapHPair.at((await this.factory.createPair(this.token1.address, this.token2.address)).logs[0].args.pair);
     });
 
     it('should make SLTs successfully', async () => {
