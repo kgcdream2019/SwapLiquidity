@@ -22,7 +22,7 @@ module.exports = async function(deployer, network, accounts) {
     // await deployer.deploy(TimeLock, accounts[0],"3 days");
     await deployer.deploy(JulSwapHFactory, accounts[0]);  //feeSeter
     const JulSwapHFactoryContract = await JulSwapHFactory.deployed();
-    const WHT_ASSRESS = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'; //BSC_MAINNET  
+    const WHT_ASSRESS = '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F'; //HECO_MAINNET  
     console.log('factory address = ', JulSwapHFactoryContract.address, 'WHT address = ', WHT_ASSRESS);
     await deployer.deploy(JulSwapHRouter, JulSwapHFactoryContract.address, WHT_ASSRESS);  // factory address, wht address
 };

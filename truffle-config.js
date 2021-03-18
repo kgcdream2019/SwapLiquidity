@@ -82,7 +82,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+          "" //HJulSwap-Owner
         ];
         
         return new HDWalletProvider(privateKeys, "https://bsc-dataseed.binance.org");
@@ -98,7 +98,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+          "" //HJulSwap-Owner
         ];
         
         return new HDWalletProvider(privateKeys, "https://http-mainnet.hecochain.com/");
