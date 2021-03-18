@@ -3,7 +3,7 @@ const SwapLiquidityBar = artifacts.require('SwapLiquidityBar');
 const MasterChef = artifacts.require('MasterChef');
 // const WBNB = artifacts.require('WBNB');
 const BSCswapFactory = artifacts.require('BSCswapFactory');
-const BSCswapRouter = artifacts.require('BSCswapRouter');
+const JulSwapHRouter = artifacts.require('JulSwapHRouter');
 
 const MockERC20 = artifacts.require('MockERC20');
 const BSCswapPair = artifacts.require('BSCswapPair');
@@ -24,7 +24,7 @@ module.exports = async function(deployer, network, accounts) {
     const BSCswapFactoryContract = await BSCswapFactory.deployed();
     const WBNB_ASSRESS = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'; //BSC_MAINNET  
     console.log('factory address = ', BSCswapFactoryContract.address, 'WBNB address = ', WBNB_ASSRESS);
-    await deployer.deploy(BSCswapRouter, BSCswapFactoryContract.address, WBNB_ASSRESS);  // factory address, weth address
+    await deployer.deploy(JulSwapHRouter, BSCswapFactoryContract.address, WBNB_ASSRESS);  // factory address, weth address
 };
 
 

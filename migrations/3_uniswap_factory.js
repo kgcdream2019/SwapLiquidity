@@ -3,7 +3,7 @@ const SwapLiquidityBar = artifacts.require('SwapLiquidityBar');
 const MasterChef = artifacts.require('MasterChef');
 // const WBNB = artifacts.require('WBNB');
 const BSCswapFactory = artifacts.require('BSCswapFactory');
-const BSCswapRouter = artifacts.require('BSCswapRouter');
+const JulSwapHRouter = artifacts.require('JulSwapHRouter');
 
 // Deployment uniswap contracts
 
