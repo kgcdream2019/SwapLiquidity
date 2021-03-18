@@ -3,7 +3,7 @@
 pragma solidity =0.6.12;
 
 
-import './libraries/BSCswapLibrary.sol';
+import './libraries/JulSwapHLibrary.sol';
 import './libraries/SafeMath.sol';
 import './libraries/TransferHelper.sol';
 import './interfaces/IJulSwapHRouter02.sol';
@@ -22,9 +22,9 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         _;
     }
 
-    constructor(address _factory, address _WBNB) public {
+    constructor(address _factory, address _WHT) public {
         factory = _factory;
-        WHT = _WBNB;
+        WHT = _WHT;
     }
 
     receive() external payable {
@@ -44,16 +44,16 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         if (IJulSwapHFactory(factory).getPair(tokenA, tokenB) == address(0)) {
             IJulSwapHFactory(factory).createPair(tokenA, tokenB);
         }
-        (uint reserveA, uint reserveB) = BSCswapLibrary.getReserves(factory, tokenA, tokenB);
+        (uint reserveA, uint reserveB) = JulSwapHLibrary.getReserves(factory, tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
             (amountA, amountB) = (amountADesired, amountBDesired);
         } else {
-            uint amountBOptimal = BSCswapLibrary.quote(amountADesired, reserveA, reserveB);
+            uint amountBOptimal = JulSwapHLibrary.quote(amountADesired, reserveA, reserveB);
             if (amountBOptimal <= amountBDesired) {
                 require(amountBOptimal >= amountBMin, 'JulSwapHRouter: INSUFFICIENT_B_AMOUNT');
                 (amountA, amountB) = (amountADesired, amountBOptimal);
             } else {
-                uint amountAOptimal = BSCswapLibrary.quote(amountBDesired, reserveB, reserveA);
+                uint amountAOptimal = JulSwapHLibrary.quote(amountBDesired, reserveB, reserveA);
                 assert(amountAOptimal <= amountADesired);
                 require(amountAOptimal >= amountAMin, 'JulSwapHRouter: INSUFFICIENT_A_AMOUNT');
                 (amountA, amountB) = (amountAOptimal, amountBDesired);
@@ -71,7 +71,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint deadline
     ) external virtual override ensure(deadline) returns (uint amountA, uint amountB, uint liquidity) {
         (amountA, amountB) = _addLiquidity(tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin);
-        address pair = BSCswapLibrary.pairFor(factory, tokenA, tokenB);
+        address pair = JulSwapHLibrary.pairFor(factory, tokenA, tokenB);
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IJulSwapHPair(pair).mint(to);
@@ -92,7 +92,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
             amountTokenMin,
             amountBNBMin
         );
-        address pair = BSCswapLibrary.pairFor(factory, token, WHT);
+        address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         TransferHelper.safeTransferFrom(token, msg.sender, pair, amountToken);
         IWHT(WHT).deposit{value: amountBNB}();
         assert(IWHT(WHT).transfer(pair, amountBNB));
@@ -111,10 +111,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         address to,
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountA, uint amountB) {
-        address pair = BSCswapLibrary.pairFor(factory, tokenA, tokenB);
+        address pair = JulSwapHLibrary.pairFor(factory, tokenA, tokenB);
         IJulSwapHPair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
         (uint amount0, uint amount1) = IJulSwapHPair(pair).burn(to);
-        (address token0,) = BSCswapLibrary.sortTokens(tokenA, tokenB);
+        (address token0,) = JulSwapHLibrary.sortTokens(tokenA, tokenB);
         (amountA, amountB) = tokenA == token0 ? (amount0, amount1) : (amount1, amount0);
         require(amountA >= amountAMin, 'JulSwapHRouter: INSUFFICIENT_A_AMOUNT');
         require(amountB >= amountBMin, 'JulSwapHRouter: INSUFFICIENT_B_AMOUNT');
@@ -150,7 +150,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external virtual override returns (uint amountA, uint amountB) {
-        address pair = BSCswapLibrary.pairFor(factory, tokenA, tokenB);
+        address pair = JulSwapHLibrary.pairFor(factory, tokenA, tokenB);
         uint value = approveMax ? uint(-1) : liquidity;
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);
@@ -164,7 +164,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external virtual override returns (uint amountToken, uint amountBNB) {
-        address pair = BSCswapLibrary.pairFor(factory, token, WHT);
+        address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         uint value = approveMax ? uint(-1) : liquidity;
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountToken, amountBNB) = removeLiquidityBNB(token, liquidity, amountTokenMin, amountBNBMin, to, deadline);
@@ -201,7 +201,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external virtual override returns (uint amountBNB) {
-        address pair = BSCswapLibrary.pairFor(factory, token, WHT);
+        address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         uint value = approveMax ? uint(-1) : liquidity;
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         amountBNB = removeLiquidityBNBSupportingFeeOnTransferTokens(
@@ -214,11 +214,11 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
     function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
-            (address token0,) = BSCswapLibrary.sortTokens(input, output);
+            (address token0,) = JulSwapHLibrary.sortTokens(input, output);
             uint amountOut = amounts[i + 1];
             (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOut) : (amountOut, uint(0));
-            address to = i < path.length - 2 ? BSCswapLibrary.pairFor(factory, output, path[i + 2]) : _to;
-            IJulSwapHPair(BSCswapLibrary.pairFor(factory, input, output)).swap(
+            address to = i < path.length - 2 ? JulSwapHLibrary.pairFor(factory, output, path[i + 2]) : _to;
+            IJulSwapHPair(JulSwapHLibrary.pairFor(factory, input, output)).swap(
                 amount0Out, amount1Out, to, new bytes(0)
             );
         }
@@ -230,10 +230,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         address to,
         uint deadline
     ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
-        amounts = BSCswapLibrary.getAmountsOut(factory, amountIn, path);
+        amounts = JulSwapHLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]
         );
         _swap(amounts, path, to);
     }
@@ -244,10 +244,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         address to,
         uint deadline
     ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
-        amounts = BSCswapLibrary.getAmountsIn(factory, amountOut, path);
+        amounts = JulSwapHLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'JulSwapHRouter: EXCESSIVE_INPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]
         );
         _swap(amounts, path, to);
     }
@@ -260,10 +260,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         returns (uint[] memory amounts)
     {
         require(path[0] == WHT, 'JulSwapHRouter: INVALID_PATH');
-        amounts = BSCswapLibrary.getAmountsOut(factory, msg.value, path);
+        amounts = JulSwapHLibrary.getAmountsOut(factory, msg.value, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         IWHT(WHT).deposit{value: amounts[0]}();
-        assert(IWHT(WHT).transfer(BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
+        assert(IWHT(WHT).transfer(JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
     }
     function swapTokensForExactBNB(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
@@ -274,10 +274,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         returns (uint[] memory amounts)
     {
         require(path[path.length - 1] == WHT, 'JulSwapHRouter: INVALID_PATH');
-        amounts = BSCswapLibrary.getAmountsIn(factory, amountOut, path);
+        amounts = JulSwapHLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'JulSwapHRouter: EXCESSIVE_INPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]
         );
         _swap(amounts, path, address(this));
         IWHT(WHT).withdraw(amounts[amounts.length - 1]);
@@ -291,10 +291,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         returns (uint[] memory amounts)
     {
         require(path[path.length - 1] == WHT, 'JulSwapHRouter: INVALID_PATH');
-        amounts = BSCswapLibrary.getAmountsOut(factory, amountIn, path);
+        amounts = JulSwapHLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]
         );
         _swap(amounts, path, address(this));
         IWHT(WHT).withdraw(amounts[amounts.length - 1]);
@@ -309,10 +309,10 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         returns (uint[] memory amounts)
     {
         require(path[0] == WHT, 'JulSwapHRouter: INVALID_PATH');
-        amounts = BSCswapLibrary.getAmountsIn(factory, amountOut, path);
+        amounts = JulSwapHLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= msg.value, 'JulSwapHRouter: EXCESSIVE_INPUT_AMOUNT');
         IWHT(WHT).deposit{value: amounts[0]}();
-        assert(IWHT(WHT).transfer(BSCswapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
+        assert(IWHT(WHT).transfer(JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
         // refund dust BNB, if any
         if (msg.value > amounts[0]) TransferHelper.safeTransferBNB(msg.sender, msg.value - amounts[0]);
@@ -323,18 +323,18 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
     function _swapSupportingFeeOnTransferTokens(address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
-            (address token0,) = BSCswapLibrary.sortTokens(input, output);
-            IJulSwapHPair pair = IJulSwapHPair(BSCswapLibrary.pairFor(factory, input, output));
+            (address token0,) = JulSwapHLibrary.sortTokens(input, output);
+            IJulSwapHPair pair = IJulSwapHPair(JulSwapHLibrary.pairFor(factory, input, output));
             uint amountInput;
             uint amountOutput;
             { // scope to avoid stack too deep errors
             (uint reserve0, uint reserve1,) = pair.getReserves();
             (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
             amountInput = IHRC20JulSwap(input).balanceOf(address(pair)).sub(reserveInput);
-            amountOutput = BSCswapLibrary.getAmountOut(amountInput, reserveInput, reserveOutput);
+            amountOutput = JulSwapHLibrary.getAmountOut(amountInput, reserveInput, reserveOutput);
             }
             (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOutput) : (amountOutput, uint(0));
-            address to = i < path.length - 2 ? BSCswapLibrary.pairFor(factory, output, path[i + 2]) : _to;
+            address to = i < path.length - 2 ? JulSwapHLibrary.pairFor(factory, output, path[i + 2]) : _to;
             pair.swap(amount0Out, amount1Out, to, new bytes(0));
         }
     }
@@ -346,7 +346,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint deadline
     ) external virtual override ensure(deadline) {
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amountIn
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amountIn
         );
         uint balanceBefore = IHRC20JulSwap(path[path.length - 1]).balanceOf(to);
         _swapSupportingFeeOnTransferTokens(path, to);
@@ -370,7 +370,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         require(path[0] == WHT, 'JulSwapHRouter: INVALID_PATH');
         uint amountIn = msg.value;
         IWHT(WHT).deposit{value: amountIn}();
-        assert(IWHT(WHT).transfer(BSCswapLibrary.pairFor(factory, path[0], path[1]), amountIn));
+        assert(IWHT(WHT).transfer(JulSwapHLibrary.pairFor(factory, path[0], path[1]), amountIn));
         uint balanceBefore = IHRC20JulSwap(path[path.length - 1]).balanceOf(to);
         _swapSupportingFeeOnTransferTokens(path, to);
         require(
@@ -392,7 +392,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
     {
         require(path[path.length - 1] == WHT, 'JulSwapHRouter: INVALID_PATH');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, BSCswapLibrary.pairFor(factory, path[0], path[1]), amountIn
+            path[0], msg.sender, JulSwapHLibrary.pairFor(factory, path[0], path[1]), amountIn
         );
         _swapSupportingFeeOnTransferTokens(path, address(this));
         uint amountOut = IHRC20JulSwap(WHT).balanceOf(address(this));
@@ -403,7 +403,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
 
     // **** LIBRARY FUNCTIONS ****
     function quote(uint amountA, uint reserveA, uint reserveB) public pure virtual override returns (uint amountB) {
-        return BSCswapLibrary.quote(amountA, reserveA, reserveB);
+        return JulSwapHLibrary.quote(amountA, reserveA, reserveB);
     }
 
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
@@ -413,7 +413,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         override
         returns (uint amountOut)
     {
-        return BSCswapLibrary.getAmountOut(amountIn, reserveIn, reserveOut);
+        return JulSwapHLibrary.getAmountOut(amountIn, reserveIn, reserveOut);
     }
 
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut)
@@ -423,7 +423,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         override
         returns (uint amountIn)
     {
-        return BSCswapLibrary.getAmountIn(amountOut, reserveIn, reserveOut);
+        return JulSwapHLibrary.getAmountIn(amountOut, reserveIn, reserveOut);
     }
 
     function getAmountsOut(uint amountIn, address[] memory path)
@@ -433,7 +433,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         override
         returns (uint[] memory amounts)
     {
-        return BSCswapLibrary.getAmountsOut(factory, amountIn, path);
+        return JulSwapHLibrary.getAmountsOut(factory, amountIn, path);
     }
 
     function getAmountsIn(uint amountOut, address[] memory path)
@@ -443,6 +443,6 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         override
         returns (uint[] memory amounts)
     {
-        return BSCswapLibrary.getAmountsIn(factory, amountOut, path);
+        return JulSwapHLibrary.getAmountsIn(factory, amountOut, path);
     }
 }

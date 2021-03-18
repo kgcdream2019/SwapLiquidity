@@ -11,10 +11,10 @@ contract('Migrator', ([alice, bob, dev, minter]) => {
         this.factory1 = await JulSwapHFactory.new(alice, { from: alice });
         this.factory2 = await JulSwapHFactory.new(alice, { from: alice });
         this.swapliquidity = await SwapLiquidityToken.new({ from: alice });
-        this.weth = await MockERC20.new('WHT', 'WHT', '100000000', { from: minter });
+        this.wht = await MockERC20.new('WHT', 'WHT', '100000000', { from: minter });
         this.token = await MockERC20.new('TOKEN', 'TOKEN', '100000000', { from: minter });
-        this.lp1 = await JulSwapHPair.at((await this.factory1.createPair(this.weth.address, this.token.address)).logs[0].args.pair);
-        this.lp2 = await JulSwapHPair.at((await this.factory2.createPair(this.weth.address, this.token.address)).logs[0].args.pair);
+        this.lp1 = await JulSwapHPair.at((await this.factory1.createPair(this.wht.address, this.token.address)).logs[0].args.pair);
+        this.lp2 = await JulSwapHPair.at((await this.factory2.createPair(this.wht.address, this.token.address)).logs[0].args.pair);
         this.chef = await MasterChef.new(this.swapliquidity.address, dev, '1000', '0', '100000', { from: alice });
         this.migrator = await Migrator.new(this.chef.address, this.factory1.address, this.factory2.address, '0');
         await this.swapliquidity.transferOwnership(this.chef.address, { from: alice });
@@ -23,12 +23,12 @@ contract('Migrator', ([alice, bob, dev, minter]) => {
 
     it('should do the migration successfully', async () => {
         await this.token.transfer(this.lp1.address, '10000000', { from: minter });
-        await this.weth.transfer(this.lp1.address, '500000', { from: minter });
+        await this.wht.transfer(this.lp1.address, '500000', { from: minter });
         await this.lp1.mint(minter);
         assert.equal((await this.lp1.balanceOf(minter)).valueOf(), '2235067');
         // Add some fake revenue
         await this.token.transfer(this.lp1.address, '100000', { from: minter });
-        await this.weth.transfer(this.lp1.address, '5000', { from: minter });
+        await this.wht.transfer(this.lp1.address, '5000', { from: minter });
         await this.lp1.sync();
         await this.lp1.approve(this.chef.address, '100000000000', { from: minter });
         await this.chef.deposit('0', '2000000', { from: minter });
@@ -44,14 +44,14 @@ contract('Migrator', ([alice, bob, dev, minter]) => {
         await this.lp2.transfer(this.lp2.address, '2000000', { from: minter });
         await this.lp2.burn(bob);
         assert.equal((await this.token.balanceOf(bob)).valueOf(), '9033718');
-        assert.equal((await this.weth.balanceOf(bob)).valueOf(), '451685');
+        assert.equal((await this.wht.balanceOf(bob)).valueOf(), '451685');
     });
 
     it('should allow first minting from public only after migrator is gone', async () => {
         await this.factory2.setMigrator(this.migrator.address, { from: alice });
         this.tokenx = await MockERC20.new('TOKENX', 'TOKENX', '100000000', { from: minter });
-        this.lpx = await JulSwapHPair.at((await this.factory2.createPair(this.weth.address, this.tokenx.address)).logs[0].args.pair);
-        await this.weth.transfer(this.lpx.address, '10000000', { from: minter });
+        this.lpx = await JulSwapHPair.at((await this.factory2.createPair(this.wht.address, this.tokenx.address)).logs[0].args.pair);
+        await this.wht.transfer(this.lpx.address, '10000000', { from: minter });
         await this.tokenx.transfer(this.lpx.address, '500000', { from: minter });
         await expectRevert(this.lpx.mint(minter), 'Must not have migrator');
         await this.factory2.setMigrator('0x0000000000000000000000000000000000000000', { from: alice });

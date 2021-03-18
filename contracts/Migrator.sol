@@ -1,7 +1,7 @@
 pragma solidity 0.6.12;
 
-import "./bscswap/interfaces/IJulSwapHPair.sol";
-import "./bscswap/interfaces/IJulSwapHFactory.sol";
+import "./huobi/interfaces/IJulSwapHPair.sol";
+import "./huobi/interfaces/IJulSwapHFactory.sol";
 
 
 contract Migrator {
