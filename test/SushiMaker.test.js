@@ -46,7 +46,7 @@ contract('SwapLiquidityMaker', ([alice, bar, minter]) => {
         await this.maker.convert(this.token1.address, this.token2.address);
         assert.equal((await this.swapliquidity.balanceOf(bar)).valueOf(), '32965');
         assert.equal((await this.token1Token2.balanceOf(this.maker.address)).valueOf(), '0');
-        // Should also work for SLT-BNB pair
+        // Should also work for SLT-HT pair
         await this.swapliquidity.transfer(this.swapliquidityWHT.address, '100000', { from: minter });
         await this.wht.transfer(this.swapliquidityWHT.address, '100000', { from: minter });
         await this.swapliquidityWHT.sync();

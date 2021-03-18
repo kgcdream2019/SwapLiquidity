@@ -5,23 +5,23 @@ pragma solidity >=0.6.2;
 import './IJulSwapHRouter01.sol';
 
 interface IJulSwapHRouter02 is IJulSwapHRouter01 {
-    function removeLiquidityBNBSupportingFeeOnTransferTokens(
+    function removeLiquidityHTSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline
-    ) external returns (uint amountBNB);
-    function removeLiquidityBNBWithPermitSupportingFeeOnTransferTokens(
+    ) external returns (uint amountHT);
+    function removeLiquidityHTWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external returns (uint amountBNB);
+    ) external returns (uint amountHT);
 
     function swapExactTokensForTokensSupportingFeeOnTransferTokens(
         uint amountIn,
@@ -30,13 +30,13 @@ interface IJulSwapHRouter02 is IJulSwapHRouter01 {
         address to,
         uint deadline
     ) external;
-    function swapExactBNBForTokensSupportingFeeOnTransferTokens(
+    function swapExactHTForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
         uint deadline
     ) external payable;
-    function swapExactTokensForBNBSupportingFeeOnTransferTokens(
+    function swapExactTokensForHTSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,

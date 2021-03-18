@@ -2,7 +2,7 @@
 
 pragma solidity >=0.6.0;
 
-// helper methods for interacting with HRC20 tokens and sending BNB that do not consistently return true/false
+// helper methods for interacting with HRC20 tokens and sending HT that do not consistently return true/false
 library TransferHelper {
     function safeApprove(address token, address to, uint value) internal {
         // bytes4(keccak256(bytes('approve(address,uint256)')));
@@ -22,8 +22,8 @@ library TransferHelper {
         require(success && (data.length == 0 || abi.decode(data, (bool))), 'TransferHelper: TRANSFER_FROM_FAILED');
     }
 
-    function safeTransferBNB(address to, uint value) internal {
+    function safeTransferHT(address to, uint value) internal {
         (bool success,) = to.call{value:value}(new bytes(0));
-        require(success, 'TransferHelper: BNB_TRANSFER_FAILED');
+        require(success, 'TransferHelper: HT_TRANSFER_FAILED');
     }
 }

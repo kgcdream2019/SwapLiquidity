@@ -28,7 +28,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
     }
 
     receive() external payable {
-        assert(msg.sender == WHT); // only accept BNB via fallback from the WHT contract
+        assert(msg.sender == WHT); // only accept HT via fallback from the WHT contract
     }
 
     // **** ADD LIQUIDITY ****
@@ -76,29 +76,29 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IJulSwapHPair(pair).mint(to);
     }
-    function addLiquidityBNB(
+    function addLiquidityHT(
         address token,
         uint amountTokenDesired,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline
-    ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountBNB, uint liquidity) {
-        (amountToken, amountBNB) = _addLiquidity(
+    ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountHT, uint liquidity) {
+        (amountToken, amountHT) = _addLiquidity(
             token,
             WHT,
             amountTokenDesired,
             msg.value,
             amountTokenMin,
-            amountBNBMin
+            amountHTMin
         );
         address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         TransferHelper.safeTransferFrom(token, msg.sender, pair, amountToken);
-        IWHT(WHT).deposit{value: amountBNB}();
-        assert(IWHT(WHT).transfer(pair, amountBNB));
+        IWHT(WHT).deposit{value: amountHT}();
+        assert(IWHT(WHT).transfer(pair, amountHT));
         liquidity = IJulSwapHPair(pair).mint(to);
-        // refund dust BNB, if any
-        if (msg.value > amountBNB) TransferHelper.safeTransferBNB(msg.sender, msg.value - amountBNB);
+        // refund dust HT, if any
+        if (msg.value > amountHT) TransferHelper.safeTransferHT(msg.sender, msg.value - amountHT);
     }
 
     // **** REMOVE LIQUIDITY ****
@@ -119,26 +119,26 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         require(amountA >= amountAMin, 'JulSwapHRouter: INSUFFICIENT_A_AMOUNT');
         require(amountB >= amountBMin, 'JulSwapHRouter: INSUFFICIENT_B_AMOUNT');
     }
-    function removeLiquidityBNB(
+    function removeLiquidityHT(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountToken, uint amountBNB) {
-        (amountToken, amountBNB) = removeLiquidity(
+    ) public virtual override ensure(deadline) returns (uint amountToken, uint amountHT) {
+        (amountToken, amountHT) = removeLiquidity(
             token,
             WHT,
             liquidity,
             amountTokenMin,
-            amountBNBMin,
+            amountHTMin,
             address(this),
             deadline
         );
         TransferHelper.safeTransfer(token, to, amountToken);
-        IWHT(WHT).withdraw(amountBNB);
-        TransferHelper.safeTransferBNB(to, amountBNB);
+        IWHT(WHT).withdraw(amountHT);
+        TransferHelper.safeTransferHT(to, amountHT);
     }
     function removeLiquidityWithPermit(
         address tokenA,
@@ -155,57 +155,57 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);
     }
-    function removeLiquidityBNBWithPermit(
+    function removeLiquidityHTWithPermit(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external virtual override returns (uint amountToken, uint amountBNB) {
+    ) external virtual override returns (uint amountToken, uint amountHT) {
         address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         uint value = approveMax ? uint(-1) : liquidity;
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
-        (amountToken, amountBNB) = removeLiquidityBNB(token, liquidity, amountTokenMin, amountBNBMin, to, deadline);
+        (amountToken, amountHT) = removeLiquidityHT(token, liquidity, amountTokenMin, amountHTMin, to, deadline);
     }
 
     // **** REMOVE LIQUIDITY (supporting fee-on-transfer tokens) ****
-    function removeLiquidityBNBSupportingFeeOnTransferTokens(
+    function removeLiquidityHTSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountBNB) {
-        (, amountBNB) = removeLiquidity(
+    ) public virtual override ensure(deadline) returns (uint amountHT) {
+        (, amountHT) = removeLiquidity(
             token,
             WHT,
             liquidity,
             amountTokenMin,
-            amountBNBMin,
+            amountHTMin,
             address(this),
             deadline
         );
         TransferHelper.safeTransfer(token, to, IHRC20JulSwap(token).balanceOf(address(this)));
-        IWHT(WHT).withdraw(amountBNB);
-        TransferHelper.safeTransferBNB(to, amountBNB);
+        IWHT(WHT).withdraw(amountHT);
+        TransferHelper.safeTransferHT(to, amountHT);
     }
-    function removeLiquidityBNBWithPermitSupportingFeeOnTransferTokens(
+    function removeLiquidityHTWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
         uint amountTokenMin,
-        uint amountBNBMin,
+        uint amountHTMin,
         address to,
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
-    ) external virtual override returns (uint amountBNB) {
+    ) external virtual override returns (uint amountHT) {
         address pair = JulSwapHLibrary.pairFor(factory, token, WHT);
         uint value = approveMax ? uint(-1) : liquidity;
         IJulSwapHPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
-        amountBNB = removeLiquidityBNBSupportingFeeOnTransferTokens(
-            token, liquidity, amountTokenMin, amountBNBMin, to, deadline
+        amountHT = removeLiquidityHTSupportingFeeOnTransferTokens(
+            token, liquidity, amountTokenMin, amountHTMin, to, deadline
         );
     }
 
@@ -251,7 +251,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         );
         _swap(amounts, path, to);
     }
-    function swapExactBNBForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactHTForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -266,7 +266,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         assert(IWHT(WHT).transfer(JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
     }
-    function swapTokensForExactBNB(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+    function swapTokensForExactHT(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -281,9 +281,9 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         );
         _swap(amounts, path, address(this));
         IWHT(WHT).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferBNB(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferHT(to, amounts[amounts.length - 1]);
     }
-    function swapExactTokensForBNB(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactTokensForHT(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -298,9 +298,9 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         );
         _swap(amounts, path, address(this));
         IWHT(WHT).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferBNB(to, amounts[amounts.length - 1]);
+        TransferHelper.safeTransferHT(to, amounts[amounts.length - 1]);
     }
-    function swapBNBForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
+    function swapHTForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
         external
         virtual
         override
@@ -314,8 +314,8 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         IWHT(WHT).deposit{value: amounts[0]}();
         assert(IWHT(WHT).transfer(JulSwapHLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
-        // refund dust BNB, if any
-        if (msg.value > amounts[0]) TransferHelper.safeTransferBNB(msg.sender, msg.value - amounts[0]);
+        // refund dust HT, if any
+        if (msg.value > amounts[0]) TransferHelper.safeTransferHT(msg.sender, msg.value - amounts[0]);
     }
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
@@ -355,7 +355,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
             'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
-    function swapExactBNBForTokensSupportingFeeOnTransferTokens(
+    function swapExactHTForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
@@ -378,7 +378,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
             'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
-    function swapExactTokensForBNBSupportingFeeOnTransferTokens(
+    function swapExactTokensForHTSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -398,7 +398,7 @@ contract JulSwapHRouter is IJulSwapHRouter02 {
         uint amountOut = IHRC20JulSwap(WHT).balanceOf(address(this));
         require(amountOut >= amountOutMin, 'JulSwapHRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         IWHT(WHT).withdraw(amountOut);
-        TransferHelper.safeTransferBNB(to, amountOut);
+        TransferHelper.safeTransferHT(to, amountOut);
     }
 
     // **** LIBRARY FUNCTIONS ****
