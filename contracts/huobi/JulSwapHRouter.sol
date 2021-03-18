@@ -12,7 +12,7 @@ import './interfaces/IHRC20.sol';
 import './interfaces/IWHT.sol';
 
 contract JulSwapHRouter is IJulSwapHRouter02 {
-    using SafeMathBSCswap for uint;
+    using SafeMathJulSwap for uint;
 
     address public immutable override factory;
     address public immutable override WHT;

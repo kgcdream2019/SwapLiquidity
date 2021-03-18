@@ -10,14 +10,14 @@ import "./SwapLiquidityToken.sol";
 
 
 interface IMigratorChef {
-    // Perform LP token migration from legacy BSCswap to SwapLiquidity.
+    // Perform LP token migration from legacy JulSwap to SwapLiquidity.
     // Take the current LP token address and return the new LP token address.
     // Migrator should have full access to the caller's LP token.
     // Return the new LP token address.
     //
-    // XXX Migrator must have allowance access to BSCswap LP tokens.
+    // XXX Migrator must have allowance access to JulSwap LP tokens.
     // SwapLiquidity must mint EXACTLY the same amount of SwapLiquidity LP tokens or
-    // else something bad will happen. Traditional BSCswap does not
+    // else something bad will happen. Traditional JulSwap does not
     // do that so be careful!
     function migrate(IERC20 token) external returns (IERC20);
 }
