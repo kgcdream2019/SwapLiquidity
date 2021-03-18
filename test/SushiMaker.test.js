@@ -9,7 +9,7 @@ contract('SwapLiquidityMaker', ([alice, bar, minter]) => {
         this.factory = await JulSwapHFactory.new(alice, { from: alice });
         this.swapliquidity = await SwapLiquidityToken.new({ from: alice });
         await this.swapliquidity.mint(minter, '100000000', { from: alice });
-        this.weth = await MockERC20.new('WBNB', 'WBNB', '100000000', { from: minter });
+        this.weth = await MockERC20.new('WHT', 'WHT', '100000000', { from: minter });
         this.token1 = await MockERC20.new('TOKEN1', 'TOKEN', '100000000', { from: minter });
         this.token2 = await MockERC20.new('TOKEN2', 'TOKEN2', '100000000', { from: minter });
         this.maker = await SwapLiquidityMaker.new(this.factory.address, bar, this.swapliquidity.address, this.weth.address);
