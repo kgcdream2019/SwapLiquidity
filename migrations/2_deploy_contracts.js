@@ -20,7 +20,8 @@ module.exports = async function(deployer, network, accounts) {
     // SwapLiquidityTokenContract.transferOwnership(MasterChefContract.address);
     // await deployer.deploy(JulSwapHFactory,SwapLiquidityTokenContract.address);
     // await deployer.deploy(TimeLock, accounts[0],"3 days");
-    await deployer.deploy(JulSwapHFactory, accounts[0]);  //feeSeter
+    
+    // await deployer.deploy(JulSwapHFactory, accounts[0]);  //feeSeter
     const JulSwapHFactoryContract = await JulSwapHFactory.deployed();
     const WHT_ASSRESS = '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F'; //HECO_MAINNET  
     console.log('factory address = ', JulSwapHFactoryContract.address, 'WHT address = ', WHT_ASSRESS);

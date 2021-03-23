@@ -1,0 +1,85 @@
+
+Starting migrations...
+======================
+> Network name:    'htmainnet'
+> Network id:      128
+> Block gas limit: 30001662 (0x1c9c9fe)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xa752d9a7e5acdb1501659c78736c021338a75744cc01b98c706b861365ab8d65
+   > Blocks: 3            Seconds: 9
+   > contract address:    0x814115BB3E5566D49873bD20898E39f3d26e6475
+   > block number:        3060735
+   > block timestamp:     1616075805
+   > account:             0x88dABbE247688c4075662cAC46F699F935D6fcE1
+   > balance:             1.99724724
+   > gas used:            137638 (0x219a6)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00275276 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3060737)
+   > confirmation number: 3 (block: 3060739)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00275276 ETH
+
+
+2_deploy_contracts.js
+=====================
+htmainnet [ '0x88dABbE247688c4075662cAC46F699F935D6fcE1' ]
+
+   Deploying 'JulSwapHFactory'
+   ---------------------------
+   > transaction hash:    0xed61b16a057ef5bbecede06766c6a0365741642639f131cfaf2372c7af8d2032
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x491C5fF6F4712fafa33F124dc355858af75B2EFD
+   > block number:        3060745
+   > block timestamp:     1616075835
+   > account:             0x88dABbE247688c4075662cAC46F699F935D6fcE1
+   > balance:             1.94488674
+   > gas used:            2575771 (0x274d9b)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05151542 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 3060747)
+factory address =  0x491C5fF6F4712fafa33F124dc355858af75B2EFD WHT address =  0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F
+
+   Deploying 'JulSwapHRouter'
+   --------------------------
+   > transaction hash:    0x4973bdeeffa3c212473508167f75c63b198ce4103ab93cc2bcc0a6c4a7342c22
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x9A935354b7cE7d0aE6A3B0A83c1c377a8fEA7cCB
+   > block number:        3060750
+   > block timestamp:     1616075850
+   > account:             0x88dABbE247688c4075662cAC46F699F935D6fcE1
+   > balance:             1.86600196
+   > gas used:            3944239 (0x3c2f2f)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.07888478 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3060752)
+   > confirmation number: 2 (block: 3060753)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.1304002 ETH
+
+
+   initcode hash  0x3d05450af2c2ae253bd3f0abf57d5ddb60d5304f79f5a5840e620907ad000e55
