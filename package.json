@@ -1,8 +1,21 @@
 {
-  "name": "SwapLiquidity",
-  "version": "1.0.0",
+  "name": "@kgcdream2019/v1-core",
+  "description": "🎛 Core contracts for the JulSwap protocol",
+  "version": "1.0.1",
+  "homepage": "https://julswap.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JustLiquidity/julswap-v1-core"
+  },
   "main": "index.js",
   "license": "MIT",
+  "files": [
+    "contracts",
+    "build"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^3.1.0",
     "@openzeppelin/test-helpers": "^0.5.6",

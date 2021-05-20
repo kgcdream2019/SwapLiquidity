@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const PrivateKeyProvider = require("truffle-privatekey-provider");
-var infuraProjectId = '133c25301bc1b1ac623cfee74d60fb'; //second part
+var infuraProjectId = ''; //second part
 module.exports = {
   // Uncommenting the defaults below
   // provides for an easier quick-start with Ganache.
@@ -82,7 +82,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+          "" //BSC-Owner
         ];
         
         return new HDWalletProvider(privateKeys, "https://bsc-dataseed.binance.org");
@@ -98,7 +98,7 @@ module.exports = {
       provider: function() {
         // Or, pass an array of private keys, and optionally use a certain subset of addresses
         var privateKeys = [
-          "8865fd5725e751d432ff9076d937c0f383" //BSC-Owner
+          "" //BSC-Owner
         ];
         
         return new HDWalletProvider(privateKeys, "https://http-mainnet.hecochain.com/");
